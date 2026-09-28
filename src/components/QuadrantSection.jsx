@@ -3,7 +3,9 @@ import { motion } from 'framer-motion';
 import { QUADRANT_EMBLEMS } from '../data/products';
 import { Shield, Flame, Crown, Diamond } from 'lucide-react';
 
-export default function QuadrantSection() {
+export default function QuadrantSection({ theme = 'dark' }) {
+  const isDark = theme === 'dark';
+
   const getIcon = (id) => {
     switch (id) {
       case 'power': return <Shield className="w-8 h-8 text-[#D4AF37]" />;
@@ -15,7 +17,9 @@ export default function QuadrantSection() {
   };
 
   return (
-    <section id="quadrant" className="py-20 px-6 sm:px-10 md:px-12 bg-[#0B0B0B] text-white border-b border-[#D4AF37]/15 relative z-20">
+    <section id="quadrant" className={`py-20 px-6 sm:px-10 md:px-12 border-b border-[#D4AF37]/20 relative z-20 transition-colors duration-500 ${
+      isDark ? 'bg-[#0B0B0B] text-white' : 'bg-[#FAF8F5] text-stone-900'
+    }`}>
       <div className="max-w-[1550px] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {QUADRANT_EMBLEMS.map((item, idx) => (
@@ -27,17 +31,23 @@ export default function QuadrantSection() {
               transition={{ duration: 0.5, delay: idx * 0.1 }}
               className="pt-8 md:pt-0 lg:px-6 flex flex-col items-center text-center group cursor-pointer"
             >
-              <div className="w-16 h-16 rounded-full bg-[#181818] flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-[#D4AF37]/20 group-hover:shadow-[0_0_20px_rgba(212,175,55,0.3)] transition-all">
+              <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-[#D4AF37]/20 group-hover:shadow-[0_0_20px_rgba(212,175,55,0.3)] transition-all ${
+                isDark ? 'bg-[#181818]' : 'bg-white shadow-sm border border-stone-200'
+              }`}>
                 {getIcon(item.id)}
               </div>
 
-              <h3 className="font-display text-base tracking-[0.2em] text-white uppercase font-medium mb-1 group-hover:text-[#D4AF37] transition-colors">
+              <h3 className={`font-display text-base tracking-[0.2em] uppercase font-medium mb-1 group-hover:text-[#D4AF37] transition-colors ${
+                isDark ? 'text-white' : 'text-stone-900'
+              }`}>
                 {item.title}
               </h3>
               <p className="font-serif italic text-sm text-[#D4AF37] mb-2 font-light">
                 {item.subtitle}
               </p>
-              <p className="font-sans text-xs text-neutral-400 max-w-xs leading-relaxed font-light">
+              <p className={`font-sans text-xs max-w-xs leading-relaxed font-light ${
+                isDark ? 'text-neutral-400' : 'text-stone-600'
+              }`}>
                 {item.description}
               </p>
             </motion.div>
@@ -47,3 +57,4 @@ export default function QuadrantSection() {
     </section>
   );
 }
+

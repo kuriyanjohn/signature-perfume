@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Gem, Sparkles, ArrowRight } from 'lucide-react';
 
-export default function InspiredStonesShowcase({ onSelectProduct }) {
+export default function InspiredStonesShowcase({ onSelectProduct, theme = 'dark' }) {
   const [activeGem, setActiveGem] = useState('oud');
+  const isDark = theme === 'dark';
 
   const gemstones = [
     {
@@ -44,22 +45,30 @@ export default function InspiredStonesShowcase({ onSelectProduct }) {
   const currentGem = gemstones.find((g) => g.id === activeGem);
 
   return (
-    <section id="stones" className="py-24 px-6 md:px-12 bg-gradient-to-b from-[#0B0B0B] via-[#161410] to-[#0B0B0B] relative z-20 border-b border-[#D4AF37]/15 overflow-hidden">
+    <section id="stones" className={`py-24 px-6 md:px-12 relative z-20 border-b border-[#D4AF37]/20 overflow-hidden transition-colors duration-500 ${
+      isDark
+        ? 'bg-gradient-to-b from-[#0B0B0B] via-[#161410] to-[#0B0B0B] text-white'
+        : 'bg-gradient-to-b from-[#FAF8F5] via-[#F4F0E8] to-[#FAF8F5] text-stone-900'
+    }`}>
       
       {/* Background Decorative Element */}
       <div className="absolute right-0 top-1/2 -translate-y-1/2 w-96 h-96 bg-[#D4AF37]/5 rounded-full filter blur-3xl pointer-events-none" />
 
       <div className="max-w-[1400px] mx-auto">
         
-        {/* Header - Exact Text */}
+        {/* Header */}
         <div className="text-center mb-16">
           <span className="font-display text-xs sm:text-sm tracking-[0.32em] text-[#D4AF37] uppercase mb-3 block font-light">
             THE ALCHEMY OF GEMSTONES & FRAGRANCE
           </span>
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-white font-light tracking-[0.2em] uppercase">
+          <h2 className={`font-display text-3xl sm:text-4xl md:text-5xl font-light tracking-[0.2em] uppercase ${
+            isDark ? 'text-white' : 'text-stone-900'
+          }`}>
             INSPIRED BY PRECIOUS STONES
           </h2>
-          <p className="font-serif italic text-lg sm:text-xl text-neutral-300 max-w-2xl mx-auto mt-4 font-light">
+          <p className={`font-serif italic text-lg sm:text-xl max-w-2xl mx-auto mt-4 font-light ${
+            isDark ? 'text-neutral-300' : 'text-stone-700'
+          }`}>
             "For some, the power of a perfectly formed gem lies in its beguiling secret. In pure fragrance, we find a jewel in our nature."
           </p>
           <div className="w-24 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto mt-6" />
@@ -74,7 +83,9 @@ export default function InspiredStonesShowcase({ onSelectProduct }) {
               className={`px-6 py-3 rounded-full font-display text-xs tracking-[0.25em] uppercase transition-all duration-300 flex items-center gap-2.5 cursor-pointer ${
                 activeGem === gem.id
                   ? 'bg-[#D4AF37] text-black font-semibold shadow-[0_0_20px_rgba(212,175,55,0.4)] scale-105'
-                  : 'bg-[#141414] text-neutral-300 hover:text-[#D4AF37]'
+                  : isDark
+                    ? 'bg-[#141414] text-neutral-300 hover:text-[#D4AF37]'
+                    : 'bg-white text-stone-700 hover:text-[#B38728] border border-stone-200 shadow-sm'
               }`}
             >
               <Gem className="w-4 h-4" style={{ color: activeGem === gem.id ? '#000' : gem.color }} />
@@ -91,7 +102,11 @@ export default function InspiredStonesShowcase({ onSelectProduct }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.5 }}
-            className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center bg-[#121212]/90 rounded-[8px] p-8 sm:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
+            className={`grid grid-cols-1 lg:grid-cols-12 gap-10 items-center rounded-[8px] p-8 sm:p-12 border transition-all ${
+              isDark
+                ? 'bg-[#121212]/90 border-white/5 shadow-[0_20px_50px_rgba(0,0,0,0.8)]'
+                : 'bg-white border-[#D4AF37]/30 shadow-[0_15px_35px_rgba(0,0,0,0.06)]'
+            }`}
           >
             {/* Left Info Column */}
             <div className="lg:col-span-6 flex flex-col items-start text-left">
@@ -100,29 +115,37 @@ export default function InspiredStonesShowcase({ onSelectProduct }) {
                 <span>SACRED GEMSTONE IDENTITY</span>
               </div>
 
-              <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl tracking-[0.18em] text-white uppercase font-light mb-2">
+              <h3 className={`font-display text-2xl sm:text-3xl lg:text-4xl tracking-[0.18em] uppercase font-light mb-2 ${
+                isDark ? 'text-white' : 'text-stone-900'
+              }`}>
                 {currentGem.headline}
               </h3>
               <span className="font-serif italic text-lg text-[#D4AF37] mb-6 block">
                 {currentGem.name}
               </span>
 
-              <p className="font-sans text-sm sm:text-base leading-relaxed text-neutral-300 mb-6 font-light">
+              <p className={`font-sans text-sm sm:text-base leading-relaxed mb-6 font-light ${
+                isDark ? 'text-neutral-300' : 'text-stone-700'
+              }`}>
                 {currentGem.description}
               </p>
 
-              <div className="w-full bg-[#1A1A1A] p-4 rounded-[4px] mb-8">
+              <div className={`w-full p-4 rounded-[4px] mb-8 border ${
+                isDark ? 'bg-[#1A1A1A] border-white/5' : 'bg-[#FAF8F5] border-stone-200'
+              }`}>
                 <span className="font-display text-[10px] tracking-widest text-[#D4AF37] uppercase block mb-1">
                   OLFACTORY PROFILE:
                 </span>
-                <span className="font-serif italic text-sm text-white">
+                <span className={`font-serif italic text-sm ${
+                  isDark ? 'text-white' : 'text-stone-900'
+                }`}>
                   {currentGem.notes}
                 </span>
               </div>
 
               <button
                 onClick={() => onSelectProduct(currentGem.productId)}
-                className="px-8 py-4 bg-[#D4AF37] text-black font-display text-xs tracking-[0.25em] font-semibold uppercase hover:bg-white transition-all rounded-[2px] flex items-center gap-3 cursor-pointer"
+                className="px-8 py-4 bg-[#D4AF37] text-black font-display text-xs tracking-[0.25em] font-semibold uppercase hover:bg-stone-900 hover:text-white transition-all rounded-[2px] flex items-center gap-3 cursor-pointer"
               >
                 <span>EXPLORE {currentGem.name}</span>
                 <ArrowRight className="w-4 h-4" />
@@ -135,12 +158,11 @@ export default function InspiredStonesShowcase({ onSelectProduct }) {
                 onClick={() => onSelectProduct(currentGem.productId)}
                 className="relative w-full max-w-[400px] h-[380px] p-6 flex items-center justify-center group/gemimg cursor-pointer"
               >
-                {/* Subtle Radial Gold Glow on Mouseover */}
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#D4AF37]/20 via-[#D4AF37]/5 to-transparent opacity-20 group-hover/gemimg:opacity-50 group-hover/gemimg:scale-105 transition-all duration-500 pointer-events-none rounded-full blur-xl" />
                 <img
                   src={currentGem.image}
                   alt={currentGem.name}
-                  className="max-h-full max-w-full object-contain filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)] transition-all duration-500 ease-out group-hover/gemimg:scale-[1.03] group-hover/gemimg:-translate-y-1.5 group-hover/gemimg:drop-shadow-[0_20px_35px_rgba(212,175,55,0.25)] animate-float"
+                  className="max-h-full max-w-full object-contain filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.7)] transition-all duration-500 ease-out group-hover/gemimg:scale-[1.03] group-hover/gemimg:-translate-y-1.5 animate-float"
                 />
               </div>
             </div>
@@ -152,3 +174,4 @@ export default function InspiredStonesShowcase({ onSelectProduct }) {
     </section>
   );
 }
+
