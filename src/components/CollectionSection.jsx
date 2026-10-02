@@ -948,18 +948,7 @@ export default function CollectionSection({
                       pt-4
                     "
                   >
-                    <span
-                      className="
-                        font-display
-                        text-lg
-                        font-medium
-                        tracking-wider
-                        text-stone-900
-                        sm:text-xl
-                      "
-                    >
-                      ${product.price}
-                    </span>
+
 
                     <button
                       onClick={(e) => {
